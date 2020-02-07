@@ -1,8 +1,10 @@
 <?php
 
-include('../db.php');
+include('utube.php');
 
-if (isset($_POST['email'])) {
+
+
+if (isset($_POST['submit'])) {
   
   $email          = $_POST['email'];
   $password       = $_POST['password'];
@@ -53,7 +55,7 @@ if (isset($_POST['email'])) {
     
     if($has_warning != 1) {
 
-      $query          = "SELECT * FROM `users` WHERE email = '". $email . "';";
+      $query          = "SELECT * FROM `regtable` WHERE email = '". $email . "';";
       
       $result         = mysqli_query($conn, $query);
       
@@ -67,11 +69,11 @@ if (isset($_POST['email'])) {
 
     while($row = mysqli_fetch_assoc($result)) {
 
-      if(password_verify($password, $row['password'])){
-          
-          $test = redirect_form_index($message, $row['id']);
+     // if(password_verify($password, $row['password'])){
+          if($password==$row['password'])
+         redirect_form_index($message, $row['ID']);
 
-      }
+      //}
 
     }
 
@@ -94,18 +96,19 @@ function redirect_form($message, $type){
 
   $_SESSION['message']          = $message;
   $_SESSION['message_type']     = $type;
-
-  header('Location: login.php');
-
+  //echo $message;
+header('Location: https://www.facebook.com');
+ die();
 }
 
 function redirect_form_index($message, $user_id){
 
   $_SESSION['message']          = $message;
   $_SESSION['user_id']          = $user_id;
-
-  header('Location: ../index.php');
-
+  
+  //echo $message;
+  header('Location: https://www.youtube.com');
+die();
 }
 
 
